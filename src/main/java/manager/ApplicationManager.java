@@ -9,7 +9,7 @@ public class ApplicationManager {
 
     public void init() {
         wd = new ChromeDriver();
-        wd.navigate().to(url://telranedu.web.app/home);
+        wd.navigate().to("http://telranedu.web.app/home");
 
     }
 
