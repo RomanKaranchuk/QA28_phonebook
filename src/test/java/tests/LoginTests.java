@@ -17,13 +17,11 @@ public class LoginTests extends TestBase {
 
     @Test
     public void loginSuccess() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd1234$");
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
-        //Assert
-//        Assert.assertEquals();
-//        Assert.assertNotEquals();
-//        Assert.assertTrue()
+
         Assert.assertTrue(app.getHelperUser().isLogged());
 
     }
@@ -31,7 +29,6 @@ public class LoginTests extends TestBase {
     @Test
     public void loginSuccess1() {
         User user = new User().setEmail("romaabcd@maile.com").setPassword("Abcd12345$");
-
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitLogin();
@@ -40,6 +37,7 @@ public class LoginTests extends TestBase {
 
     @Test
     public void loginSuccessModel() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd1234$");
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
@@ -48,6 +46,7 @@ public class LoginTests extends TestBase {
 
     @Test
     public void loginWrongEmail() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd1234$");
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
@@ -56,6 +55,7 @@ public class LoginTests extends TestBase {
 
     @Test
     public void loginWrongPassword() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd1234$");
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
@@ -65,13 +65,13 @@ public class LoginTests extends TestBase {
 
     @Test
     public void loginUnregisteredUser() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd1234$");
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
 
     }
-
 
 
 }

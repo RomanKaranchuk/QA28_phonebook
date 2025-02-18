@@ -15,13 +15,13 @@ public class RegistrationTests extends TestBase {
             app.getHelperUser().logout();
     }
 
-     @Test
-             public void RegistrationSuccess() {
-       // app.getHelperUser().openLoginRegistrationForm();
+    @Test
+    public void RegistrationSuccess() {
+        // app.getHelperUser().openLoginRegistrationForm();
         //app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
         //app.getHelperUser().submitRegistration();
 
-       //Assert.assertTrue(app.getHelperUser().isRegistration());
+        //Assert.assertTrue(app.getHelperUser().isRegistration());
 
     }
 
@@ -51,5 +51,37 @@ public class RegistrationTests extends TestBase {
 
     }
 
+    @Test
+    public void RegistrationWrongEmail() {
+        User user = new User().setEmail("romaabcmaile.com").setPassword("Abcd1234$");
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().submitRegistration();
+        Assert.assertEquals(app.getHelperUser().getErrorText(),"It' snot look like email");
+        Assert.assertTrue(app.getHelperUser().isRegistrationButtonNoteActive());
+    }
 
+    @Test
+    public void RegistrationWrongPassword() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd");
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().submitRegistration();
+    }
+
+    @Test
+    public void RegistrationEmptyEmail() {
+        User user = new User().setEmail("").setPassword("Abcd1234$");
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().submitRegistration();
+    }
+
+    @Test
+    public void RegistrationEmptyPassword() {
+        User user = new User().setEmail("romaabc@maile.com").setPassword("");
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().submitRegistration();
+    }
 }
