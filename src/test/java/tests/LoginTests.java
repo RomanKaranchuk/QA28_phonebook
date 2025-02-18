@@ -18,14 +18,14 @@ public class LoginTests extends TestBase {
     @Test
     public void loginSuccess() {
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("mara@gmail.com", "Mmar123456$");
+        app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
         //Assert
 //        Assert.assertEquals();
 //        Assert.assertNotEquals();
 //        Assert.assertTrue()
-//        Assert.assertFalse();
         Assert.assertTrue(app.getHelperUser().isLogged());
+
     }
 
     @Test
@@ -41,10 +41,37 @@ public class LoginTests extends TestBase {
     @Test
     public void loginSuccessModel() {
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("mara@gmail.com", "Mmar123456$");
+        app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
         app.getHelperUser().submitLogin();
         Assert.assertTrue(app.getHelperUser().isLogged());
     }
+
+    @Test
+    public void loginWrongEmail() {
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
+        app.getHelperUser().submitLogin();
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+    }
+
+    @Test
+    public void loginWrongPassword() {
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
+        app.getHelperUser().submitLogin();
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+
+    }
+
+    @Test
+    public void loginUnregisteredUser() {
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm("romaabcd@maile.com", "Abcd12345$");
+        app.getHelperUser().submitLogin();
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+
+    }
+
 
 
 }
