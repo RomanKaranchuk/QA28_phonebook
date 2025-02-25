@@ -10,78 +10,61 @@ import java.util.Random;
 public class RegistrationTests extends TestBase {
 
     @BeforeMethod
-    public void preCondition() {
-        if (app.getHelperUser().isLogged())
+    public void preCondition(){
+        //if SignOut present --->logout
+        if(app.getHelperUser().isLogged())
             app.getHelperUser().logout();
     }
 
     @Test
-    public void RegistrationSuccess() {
-        // app.getHelperUser().openLoginRegistrationForm();
-        //app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
-        //app.getHelperUser().submitRegistration();
+    public void registrationSuccess(){
+        int i = new Random().nextInt(1000)+1000;
+        User user = new User().withEmail("veennyaa" + i +"@gmail.com")
+                .withPassword("Abcd1234$");
 
-        //Assert.assertTrue(app.getHelperUser().isRegistration());
-
-    }
-
-    @Test
-    public void registrationSuccess() {
-        Random random = new Random();
-        int i = random.nextInt(1000) + 1000;
-        System.out.println(i);
-
-
-        System.out.println(System.currentTimeMillis());
-        int z = (int) ((System.currentTimeMillis() / 1000) % 3600);
-        System.out.println(z);
-
-        User user = new User()
-                .setFirsName("Lisa")
-                .setLastName("Snow")
-                .setEmail("snow" + i + "@gmail.com")
-                .setPassword("Snow123456$");
-
-        app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().fillRegistrationForm(user);
-
-
-        Assert.assertEquals(app.getHelperUser().getMessage(), "You are logged in success");
-
-
-    }
-
-    @Test
-    public void RegistrationWrongEmail() {
-        User user = new User().setEmail("romaabcmaile.com").setPassword("Abcd1234$");
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
-        Assert.assertEquals(app.getHelperUser().getErrorText(),"It' snot look like email");
-        Assert.assertTrue(app.getHelperUser().isRegistrationButtonNoteActive());
+
+        Assert.assertTrue(app.getHelperUser().isLogged());
+        Assert.assertTrue(app.getHelperUser().isNoContactsHereDisplayed());
+    }
+
+    @Test (description = "Bug report #12365")
+    public void registrationWrongEmail(){
+
+        User user = new User().withEmail("veennyaagmail.com")
+                .withPassword("Abcd1234$");
+
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm(user);
+        app.getHelperUser().submitRegistration();
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password format"));
     }
 
     @Test
-    public void RegistrationWrongPassword() {
-        User user = new User().setEmail("romaabc@maile.com").setPassword("Abcd");
+    public void registrationWrongPassword(){
+
+        User user = new User().withEmail("roomaabc@maile.com")
+                .withPassword("Abcd123");
+
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password format"));
     }
 
     @Test
-    public void RegistrationEmptyEmail() {
-        User user = new User().setEmail("").setPassword("Abcd1234$");
+    public void registrationExistUser(){
+
+        User user = new User().withEmail("veennyaa@gmail.com")
+                .withPassword("Abcd1234$");
+
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
+        app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitRegistration();
+//Assert.assertTrue(app.getHelperUser().isAlertPresent("User already exist"));
     }
 
-    @Test
-    public void RegistrationEmptyPassword() {
-        User user = new User().setEmail("romaabc@maile.com").setPassword("");
-        app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm("romabcd112@maile.com", "Aabcd12345$");
-        app.getHelperUser().submitRegistration();
-    }
+
 }
